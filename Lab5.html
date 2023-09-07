@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>E-commerce Store</title>
+  </head>
+  <body>
+    <h1>Sidhant E-commerce Store</h1>
+
+    <!-- Product List -->
+    <h2>Product List</h2>
+    <ul id="productList">
+      <!-- Products will be displayed here -->
+    </ul>
+
+    <!-- Wish List -->
+    <h2>Wish List</h2>
+    <ul id="wishList">
+      <!-- Wish list items will be displayed here -->
+    </ul>
+
+    <script>
+      // Sample product data
+      const products = [
+        {
+          id: 1,
+          name: "Mobile charger",
+          price: 5.99,
+          description: "Fast Charging wall adapter",
+        },
+        {
+          id: 2,
+          name: "Earphone",
+          price: 190.99,
+          description: "Noise cancelling earphone ",
+        },
+        {
+          id: 3,
+          name: "Laptop",
+          price: 599.99,
+          description: "Latest generation Laptop",
+        },
+      ];
+
+      const wishList = [];
+
+      // Function to display products
+      function displayProducts() {
+        const productList = document.getElementById("productList");
+        productList.innerHTML = "";
+
+        for (const product of products) {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `
+                    <strong>${product.name}</strong><br>
+                    Price: $${product.price.toFixed(2)}<br>
+                    Description: ${product.description}<br>
+                    <button onclick="addToWishList(${
+                      product.id
+                    })">Add to Wish List</button>
+                `;
+          productList.appendChild(listItem);
+        }
+      }
+
+      // Function to add a product to the wish list
+      function addToWishList(productId) {
+        const productToAdd = products.find(
+          (product) => product.id === productId
+        );
+        if (productToAdd) {
+          wishList.push(productToAdd);
+          displayWishList();
+        }
+      }
+
+      // Function to display the wish list
+      function displayWishList() {
+        const wishListItems = document.getElementById("wishList");
+        wishListItems.innerHTML = "";
+
+        for (const item of wishList) {
+          const wishListItem = document.createElement("li");
+          wishListItem.innerHTML = `
+                    <strong>${item.name}</strong><br>
+                    Price: $${item.price.toFixed(2)}<br>
+                `;
+          wishListItems.appendChild(wishListItem);
+        }
+      }
+
+      // Initial display of products
+      displayProducts();
+    </script>
+  </body>
+</html>

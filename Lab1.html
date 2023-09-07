@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>E-commerce Store</title>
+  </head>
+  <body>
+    <h1>Sidhant E-commerce Store</h1>
+
+    <!-- Add Product Form -->
+    <h2>Add Product</h2>
+    <form id="addProductForm">
+      <label for="productName">Name of Product:</label>
+      <input type="text" id="productName" required /><br />
+
+      <label for="productPrice">Price of product</label>
+      <input type="number" id="productPrice" required /><br />
+
+      <label for="productDescription">Product Description:</label>
+      <textarea id="productDescription" rows="3" required></textarea><br />
+
+      <button type="submit">Add Product</button>
+    </form>
+
+    <!-- Display Products -->
+    <h2>Products</h2>
+    <ul id="productList">
+      <!-- Products will be displayed here -->
+    </ul>
+
+    <!-- Search Product Form -->
+    <h2>Search Product</h2>
+    <input
+      type="text"
+      id="searchValue"
+      placeholder="Search by name, ID, or price"
+    />
+    <button onclick="searchProduct()">Search</button>
+
+    <script>
+      // Sample product data
+      const products = [];
+
+      // Function to add a product
+      function addProduct(event) {
+        event.preventDefault();
+
+        const productName = document.getElementById("productName").value;
+        const productPrice = document.getElementById("productPrice").value;
+        const productDescription =
+          document.getElementById("productDescription").value;
+
+        const product = {
+          id: products.length + 1, // Assign a unique ID
+          name: productName,
+          price: parseFloat(productPrice),
+          description: productDescription,
+        };
+
+        products.push(product);
+        displayProducts();
+        document.getElementById("addProductForm").reset();
+      }
+
+      // Function to display products
+      function displayProducts(filteredProducts) {
+        const productList = document.getElementById("productList");
+        productList.innerHTML = "";
+
+        const productsToDisplay = filteredProducts || products;
+
+        for (const product of productsToDisplay) {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `<strong>${product.name}</strong><br>ID: ${
+            product.id
+          }<br>Price: Rs${product.price.toFixed(2)}<br>Description: ${
+            product.description
+          }`;
+          productList.appendChild(listItem);
+        }
+      }
+
+      // Function to search for products
+      function searchProduct() {
+        const searchValue = document
+          .getElementById("searchValue")
+          .value.toLowerCase();
+        const filteredProducts = products.filter(
+          (product) =>
+            product.name.toLowerCase().includes(searchValue) ||
+            product.id.toString().includes(searchValue) ||
+            product.price.toString().includes(searchValue)
+        );
+        displayProducts(filteredProducts);
+      }
+
+      // Initial display of products
+      displayProducts();
+
+      // Event listener for adding products
+      document
+        .getElementById("addProductForm")
+        .addEventListener("submit", addProduct);
+    </script>
+  </body>
+</html>

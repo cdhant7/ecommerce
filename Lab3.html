@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-commerce Store</title>
+</head>
+<body>
+    <h1>Sidhant E-commerce Store</h1>
+
+    <!-- Product List -->
+    <h2>Product List</h2>
+    <ul id="productList">
+        <!-- Products will be displayed here -->
+    </ul>
+
+    <!-- Shopping Cart -->
+    <h2>Shopping Cart</h2>
+    <ul id="cart">
+        <!-- Cart items will be displayed here -->
+    </ul>
+
+    <!-- Empty Cart Button -->
+    <button onclick="emptyCart()">Empty Cart</button>
+
+    <script>
+        // Sample product data
+        const products = [
+            { id: 1, name: "Gloves", price: 10.99, description: "Riding Gloves for winter" },
+            { id: 2, name: "Electric Fan", price: 190.99, description: "Premium Quality high speed fan" },
+            { id: 3, name: "Washing machine", price: 490.99, description: "Washing machine " },
+        ];
+
+        const cart = [];
+
+        // Function to display products
+        function displayProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            for (const product of products) {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <strong>${product.name}</strong><br>
+                    Price: $${product.price.toFixed(2)}<br>
+                    Description: ${product.description}<br>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productList.appendChild(listItem);
+            }
+        }
+
+        // Function to add a product to the cart
+        function addToCart(productId) {
+            const productToAdd = products.find(product => product.id === productId);
+            if (productToAdd) {
+                cart.push(productToAdd);
+                displayCart();
+            }
+        }
+
+        // Function to remove an item from the cart
+        function removeFromCart(productId) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index !== -1) {
+                cart.splice(index, 1);
+                displayCart();
+            }
+        }
+
+        // Function to display the shopping cart
+        function displayCart() {
+            const cartList = document.getElementById('cart');
+            cartList.innerHTML = '';
+
+            for (const item of cart) {
+                const cartItem = document.createElement('li');
+                cartItem.innerHTML = `
+                    <strong>${item.name}</strong><br>
+                    Price: $${item.price.toFixed(2)}<br>
+                    <button onclick="removeFromCart(${item.id})">Remove from Cart</button>
+                `;
+                cartList.appendChild(cartItem);
+            }
+        }
+
+        // Function to empty the cart
+        function emptyCart() {
+            cart.length = 0;
+            displayCart();
+        }
+
+        // Initial display of products
+        displayProducts();
+
+    </script>
+</body>
+</html>
